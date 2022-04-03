@@ -1,0 +1,70 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+html {
+    scroll-behavior: smooth;
+  }
+body {
+    font-family: "Montserrat", Arial, Helvetica, sans-serif;
+    background-color: #F4F1ED;
+}
+#comoFunciona {
+    background-image: url(assets/layered-waves-haikei-2.svg);
+    background-repeat: no-repeat;
+    background-size: 100px cover;
+}
+#logo-home {
+    width: 50px;
+    height: 50px;
+}
+
+.navbar {
+    background-color: #EED971FF;
+    box-shadow: 0 2px 4px 0 rgba(0,0,0,.2);
+}
+
+.comoFunciona {
+
+}
+.generador {
+    /*placeholder*/
+}
+.lista {
+    /*placeholder*/
+}
+
+/*FLEXBOX*/
+.container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+.burbujaDeTexto img { 
+    margin-top: 100px;
+    width: 370px;
+    height: auto;
+}
+
+.imagen1 img {
+    margin-top: 100px;
+    height: 461px;
+    width: auto;
+}
+@media only screen and (min-width: 600px) {
+    .imagen1,
+    .imagen2,
+    .imagen3 {
+        width: 715px;
+    }
+}
+.imagen2 {
+    height: 461px;
+}
+.imagen2 img { 
+    height: 346px;
+    width: auto;
+}
+.imagen3 img { 
+    height: 270px;
+    width: auto;
+}
