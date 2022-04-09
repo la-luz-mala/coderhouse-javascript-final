@@ -14,7 +14,7 @@
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <a class="navbar-brand"><img id="logo-home" src="./assets/gift-icon.png"></a>
+        <a class="navbar-brand"><img id="logo-home" src="./assets/imgs-index/gift-icon.png"></a>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
@@ -31,20 +31,33 @@
 </nav>
 <div id="comoFunciona">
     <div class="container">
-        <div class="burbujaDeTexto"><img src="assets/paso1.png"></div>
-        <div class="imagen1"><img src="assets/DrawKit-Vector-Illustration-ecommerce-09.png"></div>    
+        <div class="burbujaDeTexto"><img src="assets/imgs-index/paso1.png"></div>
+        <div class="imagen1"><img src="assets/imgs-index/DrawKit-Vector-Illustration-ecommerce-09.png"></div>    
     </div>
     <div class="container">
-        <div class="imagen2"><img src="assets/DrawKit-Vector-Illustration-ecommerce-10.png"></div>    
-        <div class="burbujaDeTexto"><img src="assets/paso2.png"></div>
+        <div class="imagen2"><img src="assets/imgs-index/DrawKit-Vector-Illustration-ecommerce-10.png"></div>    
+        <div class="burbujaDeTexto"><img src="assets/imgs-index/paso2.png"></div>
     </div>
     <div class="container">
-        <div class="burbujaDeTexto"><img src="assets/paso3.png"></div>
-        <div class="imagen3"><img src="assets/DrawKit-Vector-Illustration-ecommerce-04.png"></div>    
+        <div class="burbujaDeTexto"><img src="assets/imgs-index/paso3.png"></div>
+        <div class="imagen3"><img src="assets/imgs-index/DrawKit-Vector-Illustration-ecommerce-04.png"></div>    
     </div>
 </div>
 
-<div id="generador" class="generador"></div>
+<div id="generador" class="generador">
+    <div class="container2">
+        <p class="campo-generador">Categoría: <span id="categoria"></span></p>
+        <p class="campo-generador">Nombre: <span id="nombre"></span></p>
+        <p class="campo-generador">Precio: <span id="precio"></span></p>
+        <p class="campo-generador">Enlace: <span id="enlace"></span></p>
+        <div id="imagen" class="campo-generador"></div>
+        
+    </div>
+    <button onclick="generarItemRandom()">Generar!</button>
+    <button onclick="agregarAMiLista()">Agregar!</button>
+</div>
+
+
 <div id="lista" class="lista"></div>
 
 <!--SCRIPTS JS-->

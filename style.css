@@ -6,10 +6,12 @@ body {
     font-family: "Montserrat", Arial, Helvetica, sans-serif;
     background-color: #F4F1ED;
 }
+/*PRIMERA SECCION*/
 #comoFunciona {
-    background-image: url(assets/layered-waves-haikei-2.svg);
+    background-image: url(assets/imgs-index/layered-waves-haikei-2.svg);
     background-repeat: no-repeat;
     background-size: 100px cover;
+    padding: 100px 0;
 }
 #logo-home {
     width: 50px;
@@ -21,26 +23,15 @@ body {
     box-shadow: 0 2px 4px 0 rgba(0,0,0,.2);
 }
 
-.comoFunciona {
-
-}
-.generador {
-    /*placeholder*/
-}
-.lista {
-    /*placeholder*/
-}
-
-/*FLEXBOX*/
 .container {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    justify-content: center;
+    justify-content: space-around;
     align-items: center;
 }
+
 .burbujaDeTexto img { 
-    margin-top: 100px;
     width: 370px;
     height: auto;
 }
@@ -50,21 +41,60 @@ body {
     height: 461px;
     width: auto;
 }
-@media only screen and (min-width: 600px) {
-    .imagen1,
-    .imagen2,
-    .imagen3 {
-        width: 715px;
-    }
-}
+
 .imagen2 {
     height: 461px;
 }
 .imagen2 img { 
-    height: 346px;
+    height: 446px;
     width: auto;
 }
 .imagen3 img { 
-    height: 270px;
+    height: 470px;
     width: auto;
+}
+
+/*  SEGUNDA SECCION   */
+.generador {
+    padding: 50px 0px;
+    background-color: white;
+    text-align: center;
+}
+.container2 {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 20px;
+}
+.campo-generador {
+    width: 400px;
+    border: 1px solid #1e1e1e;
+    text-align: center;
+    padding: 20px 10px;
+}
+.campo-generador span {
+    font-weight: 600;
+}
+.container2 img {
+    max-width: 200px;
+}
+.container2 button {
+    margin: 20px;
+}
+
+
+/*  TERCERA SECCION   */
+.lista {
+    padding: 50px 0px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 20px;
+}
+.lista hr {
+    color: #1e1e1e;
+    width: 50%;
 }
