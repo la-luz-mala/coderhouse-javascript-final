@@ -78,15 +78,15 @@ function generarItemRandom() {
 /* LISTA DEL USUARIO - Acá voy a pushear los resultados que traiga la API */
 let listaUsuario = []
 function agregarAMiLista() {
-    listaUsuario.push(item);
-    let lista = document.getElementById("lista");
-    lista.innerHTML += `<p class="lista-usuario">Categoría: ${item.categoria}</p>
-    <p class="lista-usuario">Nombre: ${item.nombre}</p>
-    <p class="lista-usuario">Precio: $ ${item.precio}</p>
-    <p class="lista-usuario">Enlace: <a href="${item.enlace}">Click aquí!</a></p><hr>`
+    let obj = listaUsuario.find(o => o.nombre === item.nombre);
+    if (obj) {
+        alert("Este item ya está en tu lista!");
+    } else {
+        listaUsuario.push(item);
+        let lista = document.getElementById("lista");
+        lista.innerHTML += `<p class="lista-usuario">Categoría: ${item.categoria}</p>
+        <p class="lista-usuario">Nombre: ${item.nombre}</p>
+        <p class="lista-usuario">Precio: $ ${item.precio}</p>
+        <p class="lista-usuario">Enlace: <a href="${item.enlace}">Click aquí!</a></p><hr>`
+    }
 }
-
-
-
-
-console.log(listaUsuario)
