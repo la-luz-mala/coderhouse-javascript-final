@@ -98,3 +98,10 @@ body {
     color: #1e1e1e;
     width: 50%;
 }
+
+.form-custom {
+    text-align: center;
+}
+.añadir-obj h2 {
+    padding-bottom: 20px;
+}

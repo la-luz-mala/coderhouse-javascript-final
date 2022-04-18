@@ -10,7 +10,10 @@
 //     })
 // -------------- Fin del llamado a la API en construcción --------------
 
-
+/*VARIABLES DE EVENT LISTENERS */
+const botonGenerar = document.querySelector("#btn-generador");
+const botonAgregar = document.querySelector("#btn-agregar");
+const botonAgregarCustom = document.querySelector("#btn-agregar-custom");
 
 /* LISTA DE PRODUCTOS - Esta sección NO es un constructor porque más adelante va a ser reemplazado por los datos que trae la API, es solo un placeholder */
 const listaProductos = [
@@ -72,21 +75,47 @@ function generarItemRandom() {
     
     let imagen = document.getElementById("imagen");
     imagen.innerHTML = `<img src="${item.imagen}" alt="${item.nombre}">`;
-
 }
+botonGenerar.addEventListener("click", generarItemRandom);
 
 /* LISTA DEL USUARIO - Acá voy a pushear los resultados que traiga la API */
+
+function pushAlArray(objeto) {
+    listaUsuario.push(objeto);
+        let lista = document.getElementById("lista");
+        lista.innerHTML += `<p class="lista-usuario">Categoría: ${objeto.categoria}</p>
+        <p class="lista-usuario">Nombre: ${objeto.nombre}</p>
+        <p class="lista-usuario">Precio: $ ${objeto.precio}</p>
+        <p class="lista-usuario">Enlace: <a href="${objeto.enlace}">Click aquí!</a></p><hr>`
+}
+
 let listaUsuario = []
 function agregarAMiLista() {
     let obj = listaUsuario.find(o => o.nombre === item.nombre);
     if (obj) {
         alert("Este item ya está en tu lista!");
     } else {
-        listaUsuario.push(item);
-        let lista = document.getElementById("lista");
-        lista.innerHTML += `<p class="lista-usuario">Categoría: ${item.categoria}</p>
-        <p class="lista-usuario">Nombre: ${item.nombre}</p>
-        <p class="lista-usuario">Precio: $ ${item.precio}</p>
-        <p class="lista-usuario">Enlace: <a href="${item.enlace}">Click aquí!</a></p><hr>`
+        pushAlArray(item);
     }
 }
+
+botonAgregar.addEventListener("click", agregarAMiLista);
+
+
+/* ITEM CUSTOM - Añade el objeto ingresado en el form en .añadir-obj a la lista custom */
+
+function agregarCustom() {
+    event.preventDefault();
+    let objetoCustom = {
+        categoria: document.getElementById("categoriaCustom").value,
+        nombre: document.getElementById("nombreCustom").value,
+        precio: document.getElementById("precioCustom").value,
+        enlace: document.getElementById("enlaceCustom").value,
+    };
+    pushAlArray(objetoCustom);
+    document.getElementById("categoriaCustom").value = "";
+    document.getElementById("nombreCustom").value = "";
+    document.getElementById("precioCustom").value = "";
+    document.getElementById("enlaceCustom").value = "";
+}
+botonAgregarCustom.addEventListener("click", agregarCustom);

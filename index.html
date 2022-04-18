@@ -53,14 +53,27 @@
         <div id="imagen" class="campo-generador"></div>
         
     </div>
-    <button onclick="generarItemRandom()">Generar!</button>
-    <button onclick="agregarAMiLista()">Agregar!</button>
+    <button id="btn-generador">Generar!</button>
+    <button id="btn-agregar">Agregar!</button>
 </div>
 
 
 <div id="lista" class="lista"></div>
 
-<div id="añadir-obj" class="añadir-obj"></div>
+<div id="añadir-obj" class="añadir-obj container2">
+    <h2>Ingresá tu propio elemento llenando este formulario:</h2>
+    <form class="form-custom">
+        <label for="categoriaCustom">Categoría</label><br>
+        <input type="text" id="categoriaCustom" name="categoriaCustom"><br>
+        <label for="nombreCustom">Nombre</label><br>
+        <input type="text" id="nombreCustom" name="nombreCustom"><br>
+        <label for="precioCustom">Precio</label><br>
+        <input type="text" id="precioCustom" name="precioCustom"><br>
+        <label for="enlaceCustom">Enlace</label><br>
+        <input type="text" id="enlaceCustom" name="enlaceCustom"><br><br>
+        <input type="submit" name="Submit" id="btn-agregar-custom">
+    </form>
+</div>
 
 <!--SCRIPTS JS-->
 <script src="js/main.js"></script>
