@@ -105,3 +105,8 @@ body {
 .añadir-obj h2 {
     padding-bottom: 20px;
 }
+
+/*GENERALES*/
+.btn {
+    color: white;
+}
