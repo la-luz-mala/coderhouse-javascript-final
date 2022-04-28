@@ -10,10 +10,24 @@
 //     })
 // -------------- Fin del llamado a la API en construcción --------------
 
+
+/*ARRAYS PARA RECORRER EL LOCALSTORAGE*/
+var arrayOfKeys = Object.keys(localStorage);
+var arrayOfValues = Object.values(localStorage);
+
+/*ONLOAD PARA PRE-POBLAR LA TABLA */
+window.addEventListener("load", poblarTabla);
+function poblarTabla() {
+    arrayOfValues.forEach(element => {
+        pushALista(JSON.parse(element));
+    });
+}
+
 /*VARIABLES DE EVENT LISTENERS */
 const botonGenerar = document.querySelector("#btn-generador");
 const botonAgregar = document.querySelector("#btn-agregar");
 const botonAgregarCustom = document.querySelector("#btn-agregar-custom");
+const botonLimpiar = document.querySelector("#btn-limpiar");
 
 /* LISTA DE PRODUCTOS - Esta sección NO es un constructor porque más adelante va a ser reemplazado por los datos que trae la API, es solo un placeholder */
 const listaProductos = [
@@ -78,44 +92,68 @@ function generarItemRandom() {
 }
 botonGenerar.addEventListener("click", generarItemRandom);
 
-/* LISTA DEL USUARIO - Acá voy a pushear los resultados que traiga la API */
+/* ITEM CUSTOM - Añade el objeto ingresado en el form a la tabla custom */
 
-function pushAlArray(objeto) {
-    listaUsuario.push(objeto);
-        let lista = document.getElementById("lista");
-        lista.innerHTML += `<p class="lista-usuario">Categoría: ${objeto.categoria}</p>
-        <p class="lista-usuario">Nombre: ${objeto.nombre}</p>
-        <p class="lista-usuario">Precio: $ ${objeto.precio}</p>
-        <p class="lista-usuario">Enlace: <a href="${objeto.enlace}">Click aquí!</a></p><hr>`
+function agregarCustom(event) {
+    event.preventDefault();
+    if (document.getElementById("categoriaCustom").value === "" || document.getElementById("nombreCustom").value === "" || document.getElementById("precioCustom").value === "" || document.getElementById("enlaceCustom").value === "") {
+        alert("Por favor completá todos los campos.")
+    } else {
+        let objetoCustom = {
+            categoria: document.getElementById("categoriaCustom").value,
+            nombre: document.getElementById("nombreCustom").value,
+            precio: document.getElementById("precioCustom").value,
+            enlace: document.getElementById("enlaceCustom").value,
+        };
+        let obj = listaUsuario.find(o => o.nombre === objetoCustom.nombre);
+        if (obj) {
+            alert("Este item ya está en tu lista!");
+        } else {
+            pushALista(objetoCustom);
+            localStorage.setItem(objetoCustom.nombre, JSON.stringify(objetoCustom));
+            document.getElementById("categoriaCustom").value = "";
+            document.getElementById("nombreCustom").value = "";
+            document.getElementById("precioCustom").value = "";
+            document.getElementById("enlaceCustom").value = "";
+        }
+    }
 }
 
+botonAgregarCustom.addEventListener("click", agregarCustom);
+
+/* Añade el objeto generado a partir del item random a la tabla custom */
 let listaUsuario = []
+
+function pushALista(objeto) {
+    listaUsuario.push(objeto);
+        let lista = document.getElementById("tabla-custom");
+        lista.innerHTML += 
+        `<tr>
+            <td>${objeto.categoria}</td>
+            <td>${objeto.nombre}</td>
+            <td>$ ${objeto.precio}</td>
+            <td><a href="${objeto.enlace}">Click aquí!</a></td>
+            <td><a class="eliminar" href="#">x</a></td>
+        </tr>`
+}
+
 function agregarAMiLista() {
     let obj = listaUsuario.find(o => o.nombre === item.nombre);
     if (obj) {
         alert("Este item ya está en tu lista!");
     } else {
-        pushAlArray(item);
+        pushALista(item);
+        localStorage.setItem(item.nombre, JSON.stringify(item));
     }
 }
+
 
 botonAgregar.addEventListener("click", agregarAMiLista);
 
 
-/* ITEM CUSTOM - Añade el objeto ingresado en el form en .añadir-obj a la lista custom */
-
-function agregarCustom() {
-    event.preventDefault();
-    let objetoCustom = {
-        categoria: document.getElementById("categoriaCustom").value,
-        nombre: document.getElementById("nombreCustom").value,
-        precio: document.getElementById("precioCustom").value,
-        enlace: document.getElementById("enlaceCustom").value,
-    };
-    pushAlArray(objetoCustom);
-    document.getElementById("categoriaCustom").value = "";
-    document.getElementById("nombreCustom").value = "";
-    document.getElementById("precioCustom").value = "";
-    document.getElementById("enlaceCustom").value = "";
+/*LIMPIAR ITEMS DE LA TABLA CUSTOM */
+botonLimpiar.addEventListener("click", limpiarTabla);
+function limpiarTabla(){
+    localStorage.clear();
+    location.reload();
 }
-botonAgregarCustom.addEventListener("click", agregarCustom);
