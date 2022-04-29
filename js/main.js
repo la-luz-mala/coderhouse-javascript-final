@@ -133,7 +133,7 @@ function pushALista(objeto) {
             <td>${objeto.nombre}</td>
             <td>$ ${objeto.precio}</td>
             <td><a href="${objeto.enlace}">Click aquí!</a></td>
-            <td><a class="eliminar" href="#">x</a></td>
+            <td><button class="btn btn-warning" onclick="borrarItem('${objeto.nombre}')">X</button></td>
         </tr>`
 }
 
@@ -155,5 +155,12 @@ botonAgregar.addEventListener("click", agregarAMiLista);
 botonLimpiar.addEventListener("click", limpiarTabla);
 function limpiarTabla(){
     localStorage.clear();
+    location.reload();
+}
+
+
+/*BORRAR ITEM DE LA TABLA Y LOCALSTORAGE */
+const borrarItem = (nombre) => {
+    localStorage.removeItem(nombre);
     location.reload();
 }
