@@ -6,6 +6,14 @@ body {
     font-family: "Montserrat", Arial, Helvetica, sans-serif;
     background-color: #F4F1ED;
 }
+
+/*ORDEN DE LAS IMAGENES EN PANTALLAS MAS CHICAS*/
+@media only screen and (max-width: 700px) {
+    .fila2 div:first-child {
+        order: 1;
+    }
+}
+
 /*PRIMERA SECCION*/
 #comoFunciona {
     background-image: url(assets/imgs-index/layered-waves-haikei-2.svg);
@@ -103,10 +111,12 @@ body {
     text-align: center;
 }
 .añadir-obj h2 {
+    padding-top: 50px;
     padding-bottom: 20px;
 }
 
 /*GENERALES*/
 .btn {
     color: white;
+    margin: 5px;
 }

@@ -28,6 +28,7 @@ const botonGenerar = document.querySelector("#btn-generador");
 const botonAgregar = document.querySelector("#btn-agregar");
 const botonAgregarCustom = document.querySelector("#btn-agregar-custom");
 const botonLimpiar = document.querySelector("#btn-limpiar");
+const botonEnviar = document.querySelector("#btn-enviar");
 
 /* LISTA DE PRODUCTOS - Esta sección NO es un constructor porque más adelante va a ser reemplazado por los datos que trae la API, es solo un placeholder */
 const listaProductos = [
@@ -163,4 +164,11 @@ function limpiarTabla(){
 const borrarItem = (nombre) => {
     localStorage.removeItem(nombre);
     location.reload();
+}
+
+/*ENVIAR LOS OBJETOS EN LOCALSTORAGE POR EMAIL */
+botonEnviar.addEventListener("click", sendMail);
+function sendMail() {
+   let mailBody=arrayOfValues;
+   window.location="mailto:email@ejemplo.com?subject=Hola&body="+mailBody;
 }
