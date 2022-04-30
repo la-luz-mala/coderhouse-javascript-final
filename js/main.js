@@ -23,13 +23,6 @@ function poblarTabla() {
     });
 }
 
-/*VARIABLES DE EVENT LISTENERS */
-const botonGenerar = document.querySelector("#btn-generador");
-const botonAgregar = document.querySelector("#btn-agregar");
-const botonAgregarCustom = document.querySelector("#btn-agregar-custom");
-const botonLimpiar = document.querySelector("#btn-limpiar");
-const botonEnviar = document.querySelector("#btn-enviar");
-
 /* LISTA DE PRODUCTOS - Esta sección NO es un constructor porque más adelante va a ser reemplazado por los datos que trae la API, es solo un placeholder */
 const listaProductos = [
     {
@@ -76,58 +69,72 @@ var item = {}
 function generarItemRandom() {
     item = listaProductos[Math.floor(Math.random()*listaProductos.length)];
 
-    let categoria = document.getElementById("categoria");
+    let categoria = $("#categoria")[0];
     categoria.innerText = item.categoria;
     
-    let nombre = document.getElementById("nombre");
+    let nombre = $("#nombre")[0];
     nombre.innerText = item.nombre;
     
-    let precio = document.getElementById("precio");
+    let precio = $("#precio")[0];
     precio.innerText = `$ ${item.precio}`;
     
-    let enlace = document.getElementById("enlace");
+    let enlace = $("#enlace")[0];
     enlace.innerHTML = `<a href="${item.enlace}">Click aquí</a>`;
     
-    let imagen = document.getElementById("imagen");
+    let imagen = $("#imagen")[0];
     imagen.innerHTML = `<img src="${item.imagen}" alt="${item.nombre}">`;
 }
-botonGenerar.addEventListener("click", generarItemRandom);
 
 /* ITEM CUSTOM - Añade el objeto ingresado en el form a la tabla custom */
 
 function agregarCustom(event) {
     event.preventDefault();
-    if (document.getElementById("categoriaCustom").value === "" || document.getElementById("nombreCustom").value === "" || document.getElementById("precioCustom").value === "" || document.getElementById("enlaceCustom").value === "") {
-        alert("Por favor completá todos los campos.")
+    if ($("#categoriaCustom").val() === "" || $("#nombreCustom").val() === "" || $("#precioCustom").val() === "" || $("#enlaceCustom").val() === "") {
+        Swal.fire({
+            text: "Por favor completá todos los campos.",
+            confirmButtonColor: "#ffc107",
+            padding: "2em",
+        })
     } else {
         let objetoCustom = {
-            categoria: document.getElementById("categoriaCustom").value,
-            nombre: document.getElementById("nombreCustom").value,
-            precio: document.getElementById("precioCustom").value,
-            enlace: document.getElementById("enlaceCustom").value,
+            categoria: $("#categoriaCustom").val(),
+            nombre: $("#nombreCustom").val(),
+            precio: $("#precioCustom").val(),
+            enlace: $("#enlaceCustom").val(),
         };
         let obj = listaUsuario.find(o => o.nombre === objetoCustom.nombre);
         if (obj) {
-            alert("Este item ya está en tu lista!");
+            Swal.fire({
+                text: "Este item ya está en tu lista!",
+                confirmButtonColor: "#ffc107",
+                padding: "2em",
+            })
         } else {
             pushALista(objetoCustom);
             localStorage.setItem(objetoCustom.nombre, JSON.stringify(objetoCustom));
-            document.getElementById("categoriaCustom").value = "";
-            document.getElementById("nombreCustom").value = "";
-            document.getElementById("precioCustom").value = "";
-            document.getElementById("enlaceCustom").value = "";
+            $("#categoriaCustom").val('');
+            $("#nombreCustom").val('');
+            $("#precioCustom").val('');
+            $("#enlaceCustom").val('');
+            Toastify({
+                text: "Agregado a la lista!",
+                offset: {
+                  x: 50,
+                  y: 10
+                },
+                backgroundColor: "#ffc107",
+              }).showToast();
         }
     }
 }
 
-botonAgregarCustom.addEventListener("click", agregarCustom);
 
 /* Añade el objeto generado a partir del item random a la tabla custom */
 let listaUsuario = []
 
 function pushALista(objeto) {
     listaUsuario.push(objeto);
-        let lista = document.getElementById("tabla-custom");
+        let lista = $("#tabla-custom")[0];
         lista.innerHTML += 
         `<tr>
             <td>${objeto.categoria}</td>
@@ -138,26 +145,29 @@ function pushALista(objeto) {
         </tr>`
 }
 
+
 function agregarAMiLista() {
     let obj = listaUsuario.find(o => o.nombre === item.nombre);
     if (obj) {
-        alert("Este item ya está en tu lista!");
+        Swal.fire({
+            text: "Este item ya está en tu lista!",
+            confirmButtonColor: "#ffc107",
+            padding: "2em",
+        });
     } else {
         pushALista(item);
         localStorage.setItem(item.nombre, JSON.stringify(item));
+        Toastify({
+            text: "Agregado a la lista!",
+            offset: {
+              x: 50,
+              y: 10
+            },
+            backgroundColor: "#ffc107",
+          }).showToast();
     }
 }
 
-
-botonAgregar.addEventListener("click", agregarAMiLista);
-
-
-/*LIMPIAR ITEMS DE LA TABLA CUSTOM */
-botonLimpiar.addEventListener("click", limpiarTabla);
-function limpiarTabla(){
-    localStorage.clear();
-    location.reload();
-}
 
 
 /*BORRAR ITEM DE LA TABLA Y LOCALSTORAGE */
@@ -166,9 +176,20 @@ const borrarItem = (nombre) => {
     location.reload();
 }
 
+
+
+/*-------------BOTONES-------------*/
+$("#btn-generador").on("click", generarItemRandom);
+$("#btn-agregar").on("click", agregarAMiLista);
+$("#btn-agregar-custom").on("click", agregarCustom);
+/*LIMPIAR ITEMS DE LA TABLA CUSTOM */
+$("#btn-limpiar").on("click", function limpiarTabla(){
+    localStorage.clear();
+    location.reload();
+});
 /*ENVIAR LOS OBJETOS EN LOCALSTORAGE POR EMAIL */
-botonEnviar.addEventListener("click", sendMail);
-function sendMail() {
-   let mailBody=arrayOfValues;
-   window.location="mailto:email@ejemplo.com?subject=Hola&body="+mailBody;
-}
+$("#btn-enviar").on("click", function sendMail() {
+    let mailBody=arrayOfValues;
+    window.location="mailto:email@ejemplo.com?subject=Hola&body="+mailBody;
+ });
+/*-----------FIN BOTONES-----------*/
