@@ -9,4 +9,5 @@ Reemplazados los selectors JS por JQUERY.
 Reemplazados los eventos onclick por eventos JQUERY.
 Cambiadas las alertas default de JS por SweetAlerts con color acorde al sitio.
 Agregadas notificaciones de Toastify al añadir un producto a la lista.
+
 -------CHANGELOG-------
