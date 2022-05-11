@@ -5,7 +5,6 @@ html {
 body {
     font-family: "Montserrat", Arial, Helvetica, sans-serif;
     background-color: #F4F1ED;
-    overflow-x: hidden;
 }
 
 /*ORDEN DE LAS IMAGENES EN PANTALLAS MAS CHICAS*/
@@ -15,7 +14,8 @@ body {
     }
     body {
         padding: 20px 0px;
-    }
+        overflow-x: hidden;
+    }    
 }
 
 /*PRIMERA SECCION*/
