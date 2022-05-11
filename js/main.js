@@ -118,7 +118,6 @@ let listaUsuario = []
 function pushALista(objeto) {
     listaUsuario.push(objeto);
         let lista = $("#tabla-custom")[0];
-        console.log(categoriaRandom.name);
         lista.innerHTML += 
         `<tr>
             <td>${categoriaRandom.name}</td>
