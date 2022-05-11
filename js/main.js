@@ -174,7 +174,7 @@ $("#btn-limpiar").on("click", function limpiarTabla(){
 /*ENVIAR LOS OBJETOS EN LOCALSTORAGE POR EMAIL */
 $("#btn-enviar").on("click", function sendMail() {
     let mailBody=arrayOfValues;
-    window.location="mailto:email@ejemplo.com?subject=Hola&body="+mailBody;
+    window.location="mailto:email@ejemplo.com?subject=Lista&body="+mailBody;
  });
 /*-----------FIN BOTONES-----------*/
 
