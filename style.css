@@ -5,12 +5,16 @@ html {
 body {
     font-family: "Montserrat", Arial, Helvetica, sans-serif;
     background-color: #F4F1ED;
+    overflow-x: hidden;
 }
 
 /*ORDEN DE LAS IMAGENES EN PANTALLAS MAS CHICAS*/
 @media only screen and (max-width: 700px) {
     .fila2 div:first-child {
         order: 1;
+    }
+    body {
+        padding: 20px 0px;
     }
 }
 
@@ -73,7 +77,7 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding-bottom: 20px;
+    padding-bottom: 40px;
 }
 .campo-generador {
     width: 400px;
@@ -93,6 +97,12 @@ body {
 
 
 /*  TERCERA SECCION   */
+#mi-lista {
+    padding: 50px 0px;
+    background-color: white;
+    text-align: center;
+}
+
 .lista {
     padding: 50px 0px;
     text-align: center;
@@ -119,4 +129,22 @@ body {
 .btn {
     color: white;
     margin: 5px;
+}
+
+/*MODAL*/
+
+.container-modal {
+    background-color: white;
+    padding: 12px;
+    max-width: 70%;
+    width: 100%;
+    border-radius: 4px;
+}
+
+.hidden {
+    display: none;
+}
+
+.boton-lista {
+    text-align: center;
 }

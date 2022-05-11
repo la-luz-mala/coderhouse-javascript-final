@@ -20,7 +20,6 @@ async function traerCategorias () {
             });
         categoriaRandom = categorias[Math.floor(Math.random()*categorias.length)];
         return categoriaRandom;
-        
     })}
 
 async function traerProductos () {
@@ -119,6 +118,7 @@ let listaUsuario = []
 function pushALista(objeto) {
     listaUsuario.push(objeto);
         let lista = $("#tabla-custom")[0];
+        console.log(categoriaRandom.name);
         lista.innerHTML += 
         `<tr>
             <td>${categoriaRandom.name}</td>
@@ -171,6 +171,13 @@ $("#btn-limpiar").on("click", function limpiarTabla(){
     localStorage.clear();
     location.reload();
 });
+$("#btn-modal").on("click", function agregarHidden() {
+    $("#my-modal").modal("show");
+})
+
+$(".btn-cerrar").on("click", function cerrarModal(){
+    $("#my-modal").modal("hide");
+})
 /*ENVIAR LOS OBJETOS EN LOCALSTORAGE POR EMAIL */
 $("#btn-enviar").on("click", function sendMail() {
     let mailBody=arrayOfValues;
