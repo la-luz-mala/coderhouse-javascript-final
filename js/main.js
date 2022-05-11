@@ -52,9 +52,6 @@ async function generarItemRandom () {
     productosDeApi = shuffle(productosDeApi);
     productoAlAzar = productosDeApi[0];
     
-    let categoria = $("#categoria")[0];
-    categoria.innerText = categoriaRandom.name;
-    
     let nombre = $("#nombre")[0];
     nombre.innerText = productoAlAzar.title;
     
@@ -72,7 +69,8 @@ async function generarItemRandom () {
 
 function agregarCustom(event) {
     event.preventDefault();
-    if ($("#categoriaCustom").val() === "" || $("#nombreCustom").val() === "" || $("#precioCustom").val() === "" || $("#enlaceCustom").val() === "") {
+    if ($("#nombreCustom").val() === "" || $("#precioCustom").val() === "" || $("#enlaceCustom").val() === "") {
+        //
         Swal.fire({
             text: "Por favor completá todos los campos.",
             confirmButtonColor: "#ffc107",
@@ -80,12 +78,11 @@ function agregarCustom(event) {
         })
     } else {
         let objetoCustom = {
-            categoria: $("#categoriaCustom").val(),
-            nombre: $("#nombreCustom").val(),
-            precio: $("#precioCustom").val(),
-            enlace: $("#enlaceCustom").val(),
+            title: $("#nombreCustom").val(),
+            price: $("#precioCustom").val(),
+            permalink: $("#enlaceCustom").val(),
         };
-        let obj = listaUsuario.find(o => o.nombre === objetoCustom.nombre);
+        let obj = listaUsuario.find(o => o.title === objetoCustom.title);
         if (obj) {
             Swal.fire({
                 text: "Este item ya está en tu lista!",
@@ -94,8 +91,7 @@ function agregarCustom(event) {
             })
         } else {
             pushALista(objetoCustom);
-            localStorage.setItem(objetoCustom.nombre, JSON.stringify(objetoCustom));
-            $("#categoriaCustom").val('');
+            localStorage.setItem(objetoCustom.title, JSON.stringify(objetoCustom));
             $("#nombreCustom").val('');
             $("#precioCustom").val('');
             $("#enlaceCustom").val('');
@@ -120,10 +116,9 @@ function pushALista(objeto) {
         let lista = $("#tabla-custom")[0];
         lista.innerHTML += 
         `<tr>
-            <td>${categoriaRandom.name}</td>
             <td>${objeto.title}</td>
             <td>$ ${objeto.price}</td>
-            <td><a href="${objeto.permalink}">Click aquí!</a></td>
+            <td><a href="${objeto.permalink}" target="_blank">Click aquí!</a></td>
             <td><button class="btn btn-warning" onclick="borrarItem('${objeto.title}')">X</button></td>
         </tr>`
 }
