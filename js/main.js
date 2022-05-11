@@ -1,19 +1,41 @@
-// -------------- Llamado a la API de MercadoLibre - en construcción --------------
-// const API_URL = 'https://api.mercadolibre.com/sites/MLA/categories';
-// const HTMLResponse = document.querySelector("#apiMELI");
-// const tpl;
+// -------------- Llamado y procesamiento de API de MercadoLibre --------------
+let categorias = [];
+let categoriaRandom = {};
+let productosDeApi = [];
+let productoAlAzar = {};
+let urlcategoria = ""
+const url ='https://api.mercadolibre.com/sites/MLA/categories';
 
-// fetch(`${API_URL}/sites/MLA/categories`)
-//     .then((response) => response.json())
-//     .then((name) => {
-//         const tpl = name.map
-//     })
-// -------------- Fin del llamado a la API en construcción --------------
+function shuffle (o) {
+    for(var j, x, i = o.length; i; j = parseInt(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x);
+    return o;
+}
 
+async function traerCategorias () {
+    await fetch(url)
+        .then(resp => resp.json())
+        .then ((data) => {
+            data.forEach(element => {
+                categorias.push(element)
+            });
+        categoriaRandom = categorias[Math.floor(Math.random()*categorias.length)];
+        return categoriaRandom;
+        
+    })}
+
+async function traerProductos () {
+    await fetch(`https://api.mercadolibre.com/sites/MLA/search?status=active&category=${categoriaRandom.id}`)
+        .then(resp => resp.json())
+        .then(data => ((data.results).forEach(element => {
+            productosDeApi.push(element)
+        })));
+}
+
+// -------------- Fin del llamado y procesamiento de API --------------
 
 /*ARRAYS PARA RECORRER EL LOCALSTORAGE*/
-var arrayOfKeys = Object.keys(localStorage);
-var arrayOfValues = Object.values(localStorage);
+let arrayOfKeys = Object.keys(localStorage);
+let arrayOfValues = Object.values(localStorage);
 
 /*ONLOAD PARA PRE-POBLAR LA TABLA */
 window.addEventListener("load", poblarTabla);
@@ -23,66 +45,28 @@ function poblarTabla() {
     });
 }
 
-/* LISTA DE PRODUCTOS - Esta sección NO es un constructor porque más adelante va a ser reemplazado por los datos que trae la API, es solo un placeholder */
-const listaProductos = [
-    {
-        categoria:"Hogar, Muebles y Jardín",
-        nombre:"Placa 3d Vinilo Autoadhesivo Para Pared 70 X 77 Piedra Beige",
-        precio: 500,
-        enlace:"https://articulo.mercadolibre.com.ar/MLA-1108814518-placa-3d-vinilo-autoadhesivo-para-pared-70-x-77-piedra-beige-_JM",
-        imagen: "./assets/imgs-productos/placa-vinilo-autoadh.jpg",
-    },
-    {
-        categoria:"Libros, Revistas y Comics",
-        nombre:"Libro El Bosque De Las Cosas Perdidas Shea Ernshan",
-        precio: 1500,
-        enlace:"https://articulo.mercadolibre.com.ar/MLA-1129317844-libro-el-bosque-de-las-cosas-perdidas-shea-ernshan-2-_JM",
-        imagen: "./assets/imgs-productos/bosque-cosas-perdidas.jpg",
-    },
-    {
-        categoria:"Deportes y Fitness",
-        nombre:"Bicicleta Nordic X1.0 By Slp R29 Shim. 21v Disco Susp+linga",
-        precio: 40998,
-        enlace:"https://articulo.mercadolibre.com.ar/MLA-739946718-bicicleta-nordic-x10-by-slp-r29-shim-21v-disco-susplinga-_JM",
-        imagen: "./assets/imgs-productos/bicicleta-nordic.jpg",
-    },
-    {
-        categoria:"Electrodomésticos y Aires Ac.",
-        nombre:"Calefactor Infrarrojo Liliana De Pared Cipar-2000",
-        precio: 11999,
-        enlace:"https://articulo.mercadolibre.com.ar/MLA-921138581-calefactor-infrarrojo-liliana-de-pared-cipar-2000-_JM",
-        imagen: "./assets/imgs-productos/calefactor-infrarrojo.jpg",
-    },
-    {
-        categoria:"Hogar, Muebles y Jardín",
-        nombre:"Lampara Led Rgbw 12w E27 220v Control Remoto 16 Colores B",
-        precio: 869,
-        enlace:"https://articulo.mercadolibre.com.ar/MLA-793583797-lampara-led-rgbw-12w-e27-220v-control-remoto-16-colores-b-_JM",
-        imagen: "./assets/imgs-productos/lampara-led.jpg",
-    },
-];
-
-
-
 /* Llamado a un item random del array + Agregar datos del objeto random a los campos del generador */
-var item = {}
-function generarItemRandom() {
-    item = listaProductos[Math.floor(Math.random()*listaProductos.length)];
 
+async function generarItemRandom () {
+    await traerCategorias();
+    await traerProductos();
+    productosDeApi = shuffle(productosDeApi);
+    productoAlAzar = productosDeApi[0];
+    
     let categoria = $("#categoria")[0];
-    categoria.innerText = item.categoria;
+    categoria.innerText = categoriaRandom.name;
     
     let nombre = $("#nombre")[0];
-    nombre.innerText = item.nombre;
+    nombre.innerText = productoAlAzar.title;
     
     let precio = $("#precio")[0];
-    precio.innerText = `$ ${item.precio}`;
+    precio.innerText = `$ ${productoAlAzar.price}`;
     
     let enlace = $("#enlace")[0];
-    enlace.innerHTML = `<a href="${item.enlace}">Click aquí</a>`;
+    enlace.innerHTML = `<a href="${productoAlAzar.permalink}">Click aquí</a>`;
     
     let imagen = $("#imagen")[0];
-    imagen.innerHTML = `<img src="${item.imagen}" alt="${item.nombre}">`;
+    imagen.innerHTML = `<img src="${productoAlAzar.thumbnail}" alt="${productoAlAzar.title}">`;
 }
 
 /* ITEM CUSTOM - Añade el objeto ingresado en el form a la tabla custom */
@@ -137,17 +121,17 @@ function pushALista(objeto) {
         let lista = $("#tabla-custom")[0];
         lista.innerHTML += 
         `<tr>
-            <td>${objeto.categoria}</td>
-            <td>${objeto.nombre}</td>
-            <td>$ ${objeto.precio}</td>
-            <td><a href="${objeto.enlace}">Click aquí!</a></td>
-            <td><button class="btn btn-warning" onclick="borrarItem('${objeto.nombre}')">X</button></td>
+            <td>${categoriaRandom.name}</td>
+            <td>${objeto.title}</td>
+            <td>$ ${objeto.price}</td>
+            <td><a href="${objeto.permalink}">Click aquí!</a></td>
+            <td><button class="btn btn-warning" onclick="borrarItem('${objeto.title}')">X</button></td>
         </tr>`
 }
 
 
 function agregarAMiLista() {
-    let obj = listaUsuario.find(o => o.nombre === item.nombre);
+    let obj = listaUsuario.find(o => o.title === productoAlAzar.title);
     if (obj) {
         Swal.fire({
             text: "Este item ya está en tu lista!",
@@ -155,8 +139,8 @@ function agregarAMiLista() {
             padding: "2em",
         });
     } else {
-        pushALista(item);
-        localStorage.setItem(item.nombre, JSON.stringify(item));
+        pushALista(productoAlAzar);
+        localStorage.setItem(productoAlAzar.title, JSON.stringify(productoAlAzar));
         Toastify({
             text: "Agregado a la lista!",
             offset: {
@@ -193,3 +177,5 @@ $("#btn-enviar").on("click", function sendMail() {
     window.location="mailto:email@ejemplo.com?subject=Hola&body="+mailBody;
  });
 /*-----------FIN BOTONES-----------*/
+
+window.onload = generarItemRandom();
